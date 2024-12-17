@@ -2,7 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const { spawn } = require('child_process');
 const vm = require('vm');
-// const cors = require('cors');
+const cors = require('cors');
 
 const app = express();
 const port = 3000;

@@ -10,14 +10,15 @@ const port = 3000;
 app.use(bodyParser.json());
 
 // app.use(cors());
-
 const corsOptions = {
-  // Replace with your domain
-  origin: 'http://localhost:5173',
-  methods: 'GET, HEAD, PUT, PATCH, POST, DELETE',
-
-  // Enable this if you need to
-  // send cookies or HTTP authentication
+  origin: function (origin, callback) {
+    if (origin === 'http://localhost:5173' || origin === 'null') {
+      // Allow requests from your development environment
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   credentials: true,
   optionsSuccessStatus: 204,
 };

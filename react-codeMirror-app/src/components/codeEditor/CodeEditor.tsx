@@ -15,7 +15,7 @@ import { MenuContent, MenuItem, MenuRoot, MenuTrigger } from '../ui/menu';
 import { githubLight } from '@uiw/codemirror-theme-github';
 import CodeMirror from '@uiw/react-codemirror';
 
-import { LanguageSupport } from '@codemirror/language';
+import { language, LanguageSupport } from '@codemirror/language';
 import { python } from '@codemirror/lang-python';
 import { javascript } from '@codemirror/lang-javascript';
 
@@ -50,18 +50,14 @@ function CodeEditor() {
     try {
       const res = await fetch(`${BASE}/execute`, {
         method: 'POST',
-        // mode: 'no-cors',
+        // mode: post.language === 'python' ? 'no-cors' : undefined,
         body: JSON.stringify({
           code: post.code,
           language: post.language,
         }),
-        // headers: {
-        //   'Content-Type': 'application/json',
-        // },
-
-        // headers: {
-        //   'Content-type': 'application/json; charset=UTF-8',
-        // },
+        headers: {
+          'Content-type': 'application/json; charset=UTF-8',
+        },
       });
       console.log(res);
       const data = await res.json();

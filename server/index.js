@@ -11,6 +11,15 @@ app.use(bodyParser.json());
 
 app.use(cors());
 
+//test api
+app.get('/test', (req, res) => {
+  try {
+    res.status(200).json({ message: 'test' });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
 app.post('/execute', async (req, res) => {
   const code = req.body.code;
   const language = req.body.language;

@@ -21,6 +21,8 @@ import { javascript } from '@codemirror/lang-javascript';
 
 const BASE = import.meta.env.VITE_API_URL;
 
+console.log(BASE);
+
 const EXTENSIONS: { [key: string]: LanguageSupport[] } = {
   python: [python()],
   javascript: [javascript()],
@@ -48,15 +50,22 @@ function CodeEditor() {
     try {
       const res = await fetch(`${BASE}/execute`, {
         method: 'POST',
+        // mode: 'no-cors',
         body: JSON.stringify({
           code: post.code,
           language: post.language,
         }),
-        headers: {
-          'Content-type': 'application/json; charset=UTF-8',
-        },
+        // headers: {
+        //   'Content-Type': 'application/json',
+        // },
+
+        // headers: {
+        //   'Content-type': 'application/json; charset=UTF-8',
+        // },
       });
+      console.log(res);
       const data = await res.json();
+
       setResult(data);
     } catch (error) {
       console.log(error);

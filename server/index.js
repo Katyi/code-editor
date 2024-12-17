@@ -11,15 +11,19 @@ app.use(bodyParser.json());
 
 // app.use(cors());
 const corsOptions = {
-  origin: '*',
-  // function (origin, callback) {
-  // if (origin === 'http://localhost:5173' || origin === 'null') {
-  //   // Allow requests from your development environment
-  //   callback(null, true);
-  // } else {
-  //   callback(new Error('Not allowed by CORS'));
-  // }
-  // },
+  // origin: '*',
+  function(origin, callback) {
+    if (
+      origin === 'http://localhost:5173' ||
+      origin === 'https://code-editor-app-ten.vercel.app' ||
+      origin === null
+    ) {
+      // Allow requests from your development environment
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   credentials: true,
   optionsSuccessStatus: 204,
 };

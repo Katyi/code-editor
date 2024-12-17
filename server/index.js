@@ -11,22 +11,18 @@ app.use(bodyParser.json());
 
 // app.use(cors());
 
-//cors
-app.use((req, res, next) => {
-  res.setHeader('Access-Control-Allow-Credentials', true);
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  // another common pattern
-  // res.setHeader('Access-Control-Allow-Origin', req.headers.origin);
-  res.setHeader(
-    'Access-Control-Allow-Methods',
-    'GET,OPTIONS,PATCH,DELETE,POST,PUT'
-  );
-  res.setHeader(
-    'Access-Control-Allow-Headers',
-    'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version'
-  );
-  next();
-});
+const corsOptions = {
+  // Replace with your domain
+  origin: 'http://localhost:5173',
+  methods: 'GET, HEAD, PUT, PATCH, POST, DELETE',
+
+  // Enable this if you need to
+  // send cookies or HTTP authentication
+  credentials: true,
+  optionsSuccessStatus: 204,
+};
+
+app.use(cors(corsOptions));
 
 //test api
 app.get('/test', (req, res) => {

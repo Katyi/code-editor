@@ -2,14 +2,29 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const { spawn } = require('child_process');
 const vm = require('vm');
-const cors = require('cors');
+// const cors = require('cors');
 
 const app = express();
 const port = 3000;
 
 app.use(bodyParser.json());
 
-app.use(cors());
+// app.use(cors());
+
+//cors
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader(
+    'Access-Control-Allow-Headers',
+    'Origin, X-Requested-With, Content-Type, Accept'
+  );
+  res.setHeader('Access-Control-Allow-Credentials', true);
+  res.setHeader(
+    'Access-Control-Allow-Methods',
+    'GET, POST, PUT, PATCH, OPTIONS, DELETE'
+  );
+  next();
+});
 
 //test api
 app.get('/test', (req, res) => {

@@ -1,0 +1,16 @@
+html,
+:root,
+body {
+  font-family: "Arial", sans-serif;
+  text-align: center;
+  padding: 0;
+  margin: 0;
+  background: #ffffff;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: 100%;
+}

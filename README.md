@@ -20,18 +20,26 @@ git clone https://github.com/Katyi/code-editor.git
 
 ##### 2. Установите модули
 
+В каждой папке react-codeMirror-app и server запустите команду:
+
 ```
-В каждой папке react-codeMirror-app и server запустите команду: npm install
+npm install
 ```
 
 ##### 3. Запуск
 
+1. В папке server в строке const pythonProcess = spawn('python', ['-c', code]) вместо python напишите путь, например: /usr/local/bin/python3, иначе локально не будет работать проверка кода python.
+
+2. В папке server запустите команду:
+
 ```
-В папке server в строке const pythonProcess = spawn('python', ['-c', code]) вместо python напишите путь, например: /usr/local/bin/python3, иначе локально не будет работать проверка кода python
+npm run start
+```
 
-В папке server запустите команду: npm run start
+3. Измените VITE_API_URL на http://localhost:3000 в .env в папке react-codeMirror-app.
 
-Измените VITE_API_URL на http://localhost:3000 в .env в папке react-codeMirror-app
+4. В папке react-codeMirror-app запустите команду:
 
-В папке react-codeMirror-app запустите команду: npm run dev
+```
+npm run dev
 ```

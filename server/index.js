@@ -29,6 +29,7 @@ app.post('/execute', async (req, res) => {
   // Execution the code from client here
   if (language === 'python') {
     const pythonProcess = spawn('python', ['-c', code]);
+    // const pythonProcess = spawn('/usr/local/bin/python3', ['-c', code]);
 
     pythonProcess.stdout.on('data', (data) => {
       output += data.toString();

@@ -6,6 +6,7 @@ import {
   Heading,
   HStack,
   Separator,
+  Spinner,
   Text,
   VStack,
 } from '@chakra-ui/react';
@@ -35,6 +36,7 @@ function CodeEditor() {
     error: '',
   };
 
+  const [loading, setLoading] = useState<boolean>(false);
   const [post, setPost] = useState<Post>({
     language: 'python',
     code: "print('Hello world!')",
@@ -47,6 +49,7 @@ function CodeEditor() {
       setResult({ ...initialResult, error: 'You have to code something' });
       return;
     }
+    setLoading(true);
     try {
       const res = await fetch(`${BASE}/execute`, {
         method: 'POST',
@@ -60,10 +63,11 @@ function CodeEditor() {
       });
       console.log(res);
       const data = await res.json();
-
+      setLoading(false);
       setResult(data);
     } catch (error) {
       console.log(error);
+      setLoading(false);
     }
   };
 
@@ -152,30 +156,48 @@ function CodeEditor() {
 
         {/* Show Result part */}
         <HStack w={'100%'} justify={'start'}>
-          <Flex
-            w={'100%'}
-            backgroundColor={'white'}
-            h={'100px'}
-            direction={'column'}
-            padding={'5px'}
-            overflow={'auto'}
-          >
-            <Text
-              wordBreak={'break-word'}
-              textAlign={'left'}
-              color={'green.600'}
+          {loading ? (
+            <Flex
+              w={'100%'}
+              backgroundColor={'white'}
+              h={'100px'}
+              direction={'column'}
+              padding={'5px'}
+              alignItems={'center'}
+              justifyContent={'center'}
             >
-              {result.message}
-            </Text>
-            {result.output && (
-              <Text wordBreak={'break-word'} textAlign={'left'}>
-                Code output: {result.output}
+              <Spinner size="md" color="blue.600" />
+            </Flex>
+          ) : (
+            <Flex
+              w={'100%'}
+              backgroundColor={'white'}
+              h={'100px'}
+              direction={'column'}
+              padding={'5px'}
+              overflow={'auto'}
+            >
+              <Text
+                wordBreak={'break-word'}
+                textAlign={'left'}
+                color={'green.600'}
+              >
+                {result.message}
               </Text>
-            )}
-            <Text wordBreak={'break-word'} textAlign={'left'} color={'red.600'}>
-              {result.error}
-            </Text>
-          </Flex>
+              {result.output && (
+                <Text wordBreak={'break-word'} textAlign={'left'}>
+                  Code output: {result.output}
+                </Text>
+              )}
+              <Text
+                wordBreak={'break-word'}
+                textAlign={'left'}
+                color={'red.600'}
+              >
+                {result.error}
+              </Text>
+            </Flex>
+          )}
         </HStack>
       </VStack>
     </Center>

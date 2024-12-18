@@ -9,26 +9,7 @@ const port = 3000;
 
 app.use(bodyParser.json());
 
-// app.use(cors());
-const corsOptions = {
-  // origin: '*',
-  function(origin, callback) {
-    if (
-      origin === 'http://localhost:5173' ||
-      origin === 'https://code-editor-app-ten.vercel.app' ||
-      origin === null
-    ) {
-      // Allow requests from your development environment
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
-  credentials: true,
-  optionsSuccessStatus: 204,
-};
-
-app.use(cors(corsOptions));
+app.use(cors());
 
 //test api
 app.get('/test', (req, res) => {
@@ -39,6 +20,7 @@ app.get('/test', (req, res) => {
   }
 });
 
+// run code
 app.post('/execute', async (req, res) => {
   const code = req.body.code;
   const language = req.body.language;
@@ -46,7 +28,6 @@ app.post('/execute', async (req, res) => {
 
   // Execution the code from client here
   if (language === 'python') {
-    // const pythonProcess = spawn('/usr/local/bin/python3', ['-c', code]);
     const pythonProcess = spawn('python', ['-c', code]);
 
     pythonProcess.stdout.on('data', (data) => {

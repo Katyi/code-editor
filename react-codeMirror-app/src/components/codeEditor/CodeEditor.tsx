@@ -50,7 +50,6 @@ function CodeEditor() {
     try {
       const res = await fetch(`${BASE}/execute`, {
         method: 'POST',
-        mode: post.language === 'python' ? 'no-cors' : undefined,
         body: JSON.stringify({
           code: post.code,
           language: post.language,
